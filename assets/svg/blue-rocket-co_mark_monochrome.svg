@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" width="200" height="280">
+  <title>Blue Rocket Co. - Monochrome Mark</title>
+  <desc>Single-color version of the mark. For print, embroidery, single-color reproduction, or watermarks. Use any solid color.</desc>
+
+  <!-- All elements in one color (deep indigo by default; user can change fill/stroke to any color) -->
+  <rect x="20" y="20" width="160" height="240" rx="80" ry="80" fill="none" stroke="#0B2545" stroke-width="3"/>
+  <path d="M 65 95 Q 65 50, 100 50 Q 135 50, 135 95 L 135 195 L 65 195 Z" fill="#0B2545"/>
+  <circle cx="100" cy="95" r="14" fill="#FFFFFF"/>
+  <rect x="73" y="205" width="10" height="28" rx="4" fill="#0B2545"/>
+  <rect x="93" y="205" width="10" height="40" rx="4" fill="#0B2545"/>
+  <rect x="113" y="205" width="10" height="28" rx="4" fill="#0B2545"/>
+</svg>

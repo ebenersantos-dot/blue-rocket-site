@@ -1,0 +1,12 @@
+/* Blue Rocket Co. — main stylesheet (aggregator)
+   Import order matters: tokens/reset first, responsive overrides last. */
+
+@import url("Components/base.css");
+@import url("Components/typography.css");
+@import url("Components/layout.css");
+@import url("Components/buttons.css");
+@import url("Components/header.css");
+@import url("Components/hero.css");
+@import url("Components/components.css");
+@import url("Components/modal.css");
+@import url("Components/responsive.css");

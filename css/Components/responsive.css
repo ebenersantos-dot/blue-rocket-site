@@ -1,0 +1,135 @@
+/* responsive.css — breakpoint overrides (desktop-down; base styles are fluid) */
+
+/* ---------- ≤ 1024px ---------- */
+@media (max-width: 1024px) {
+  .card-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---------- ≤ 860px: mobile nav ---------- */
+@media (max-width: 860px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .header-nav {
+    position: fixed;
+    inset: 0;
+    background: var(--indigo-overlay);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.75rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    z-index: 1001;
+  }
+
+  .header-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    font-size: 1.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+  }
+
+  .header-nav.is-open .nav-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .header-nav.is-open .nav-link:nth-child(1) { transition-delay: 0.08s; }
+  .header-nav.is-open .nav-link:nth-child(2) { transition-delay: 0.14s; }
+  .header-nav.is-open .nav-link:nth-child(3) { transition-delay: 0.20s; }
+  .header-nav.is-open .nav-link:nth-child(4) { transition-delay: 0.26s; }
+  .header-nav.is-open .nav-link:nth-child(5) { transition-delay: 0.32s; }
+
+  .btn-nav {
+    margin-top: 0.75rem;
+    padding: 0.9rem 2.25rem;
+    font-size: 1.05rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s var(--ease-out) 0.38s, transform 0.4s var(--ease-out) 0.38s,
+      background-color 0.25s ease;
+  }
+
+  .header-nav.is-open .btn-nav {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card-grid-3,
+  .card-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .process-step {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cursor-dot {
+    display: none;
+  }
+}
+
+/* ---------- ≤ 560px ---------- */
+@media (max-width: 560px) {
+  .card-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-contacts {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+  }
+
+  .hero-logo {
+    width: min(70vw, 280px);
+  }
+
+  .scroll-indicator {
+    bottom: 1.5rem;
+  }
+
+  .scroll-indicator-line {
+    height: 36px;
+  }
+}
+
+/* ---------- ≤ 380px (down to 360px) ---------- */
+@media (max-width: 380px) {
+  :root {
+    --container-pad: 1rem;
+    --header-height: 64px;
+  }
+
+  .header-logo img {
+    height: 26px;
+  }
+
+  .btn-lg {
+    padding: 1rem 1.75rem;
+    font-size: 0.97rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .gallery-card {
+    width: 82vw;
+  }
+}

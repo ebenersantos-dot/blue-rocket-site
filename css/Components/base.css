@@ -1,0 +1,179 @@
+/* base.css — design tokens, reset, global element styles */
+
+:root {
+  /* Brand colors */
+  --indigo-deep: #0B2545;
+  --indigo-mid: #1B4480;
+  --blue-bright: #1B98D4;
+  --blue-light: #85B7EB;
+  --cream: #F1EFE8;
+  --ink: #2D3748;
+
+  /* Derived */
+  --white: #FFFFFF;
+  --cream-dark: #E6E3D8;
+  --indigo-overlay: rgba(11, 37, 69, 0.97);
+  --error: #C0392B;
+
+  /* Typography */
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  /* Spacing & rhythm */
+  --space-section: clamp(5rem, 12vw, 10rem);
+  --container-max: 1200px;
+  --container-pad: clamp(1.25rem, 5vw, 3rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-reveal: 0.9s;
+
+  /* Header */
+  --header-height: 76px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body.is-loaded {
+  opacity: 1;
+}
+
+body.modal-open,
+body.menu-open {
+  overflow: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--blue-bright);
+  color: var(--white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue-bright);
+  outline-offset: 3px;
+}
+
+/* Cursor follow dot (desktop only — activated by JS) */
+.cursor-dot {
+  position: fixed;
+  top: -14px;
+  left: -14px;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--blue-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.25s ease, height 0.25s ease,
+    margin 0.25s ease, background-color 0.25s ease;
+}
+
+.cursor-dot.is-active {
+  opacity: 0.7;
+}
+
+.cursor-dot.is-hover {
+  width: 44px;
+  height: 44px;
+  margin: -8px 0 0 -8px;
+  background: rgba(27, 152, 212, 0.12);
+}
+
+/* Page transition veil */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--indigo-deep);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s ease;
+}
+
+.page-transition.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Scroll reveal primitives */
+.reveal,
+.reveal-hero {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity var(--duration-reveal) var(--ease-out),
+    transform var(--duration-reveal) var(--ease-out);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible,
+.reveal-hero.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal-hero {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,90 @@
+/* typography.css — type scale, headlines, editorial text */
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--indigo-deep);
+}
+
+p {
+  max-width: 65ch;
+}
+
+/* Oversized editorial section headline */
+.section-headline {
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  max-width: 18ch;
+}
+
+.section-indigo .section-headline,
+.cta-strip .section-headline {
+  color: var(--white);
+}
+
+/* Two-line split headline with staggered rise */
+.split-lines .line {
+  display: block;
+  overflow: hidden;
+}
+
+.split-lines .line > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1s var(--ease-out);
+}
+
+.split-lines.is-visible .line > span {
+  transform: translateY(0);
+}
+
+.split-lines.is-visible .line:nth-child(2) > span {
+  transition-delay: 0.12s;
+}
+
+/* Eyebrow label above headlines */
+.section-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--blue-bright);
+  margin-bottom: 1.25rem;
+}
+
+/* Closing editorial statement */
+.section-closing {
+  font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--indigo-deep);
+  max-width: 32ch;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.section-closing em {
+  font-style: normal;
+  color: var(--blue-bright);
+}
+
+.section-note {
+  font-size: 0.95rem;
+  color: var(--ink);
+  opacity: 0.75;
+  margin-top: 2rem;
+}
+
+.lead {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.55;
+  max-width: 55ch;
+}
+
+.section-indigo p,
+.cta-strip p {
+  color: var(--blue-light);
+}

@@ -1,0 +1,374 @@
+/* components.css — cards, gallery, forms, process steps, contact blocks */
+
+/* ---------- Cards ---------- */
+.card {
+  display: block;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 6px;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out),
+    border-color 0.35s ease;
+}
+
+/* Accent reveal bar on hover */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--blue-bright);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 44px rgba(11, 37, 69, 0.12);
+  border-color: transparent;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card-index {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--blue-bright);
+  margin-bottom: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-body {
+  font-size: 0.97rem;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+/* Dark variant for indigo sections */
+.card-dark {
+  background: rgba(241, 239, 232, 0.04);
+  border-color: rgba(241, 239, 232, 0.12);
+}
+
+.card-dark .card-title {
+  color: var(--white);
+}
+
+.card-dark .card-body {
+  color: var(--blue-light);
+  opacity: 1;
+}
+
+.card-dark:hover {
+  background: rgba(241, 239, 232, 0.07);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.3);
+}
+
+/* Tier cards */
+.card-tier .tier-price {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+
+.card-link-hint {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--blue-bright);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s var(--ease-out);
+}
+
+.card-tier:hover .card-link-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Full tier cards (services page) */
+.tier-full {
+  display: flex;
+  flex-direction: column;
+}
+
+.tier-meta {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--blue-bright);
+  margin-bottom: 0.5rem;
+}
+
+.tier-tools {
+  font-size: 0.9rem;
+  color: var(--ink);
+  opacity: 0.7;
+  margin: 0.75rem 0 1rem;
+}
+
+.tier-list {
+  list-style: none;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cream-dark);
+}
+
+.tier-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.tier-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--blue-bright);
+  font-weight: 500;
+}
+
+/* ---------- Horizontal scroll gallery ---------- */
+.gallery {
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 1rem 0 2rem;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.gallery-track {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  padding: 0 max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad)));
+  width: max-content;
+}
+
+.gallery-card {
+  flex: 0 0 auto;
+  width: clamp(260px, 32vw, 380px);
+  aspect-ratio: 4 / 5;
+  background: rgba(241, 239, 232, 0.04);
+  border: 1px solid rgba(241, 239, 232, 0.12);
+  border-radius: 8px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  user-select: none;
+  transition: transform 0.4s var(--ease-out), background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-8px);
+  background: rgba(241, 239, 232, 0.08);
+  border-color: var(--blue-bright);
+}
+
+.gallery-num {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: rgba(133, 183, 235, 0.35);
+}
+
+.gallery-card figcaption strong {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.gallery-card figcaption span {
+  font-size: 0.95rem;
+  color: var(--blue-light);
+}
+
+.gallery-hint {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--blue-light);
+  opacity: 0.6;
+}
+
+/* ---------- Forms ---------- */
+.form-field {
+  margin-bottom: 1.4rem;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-bottom: 0.45rem;
+  color: var(--indigo-deep);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 4px;
+  background: var(--white);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--blue-bright);
+  box-shadow: 0 0 0 3px rgba(27, 152, 212, 0.15);
+}
+
+.form-field.has-error input,
+.form-field.has-error textarea {
+  border-color: var(--error);
+}
+
+.form-error {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--error);
+  margin-top: 0.35rem;
+  min-height: 1.1em;
+}
+
+.form-success {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  background: rgba(27, 152, 212, 0.1);
+  border-left: 3px solid var(--blue-bright);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.92rem;
+  color: var(--indigo-deep);
+}
+
+/* ---------- Contact info cards ---------- */
+.contact-card {
+  text-align: left;
+}
+
+.contact-card-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--blue-bright);
+  margin-bottom: 0.6rem;
+}
+
+.contact-card a {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  transition: color 0.25s ease;
+}
+
+.contact-card a:hover {
+  color: var(--blue-bright);
+}
+
+.contact-card-note {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.65;
+  margin-top: 0.3rem;
+}
+
+/* ---------- Process steps ---------- */
+.process-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-bottom: 1px solid var(--cream-dark);
+  align-items: start;
+}
+
+.process-step:last-of-type {
+  border-bottom: none;
+}
+
+.process-num {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--blue-light);
+}
+
+.process-step h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  margin-bottom: 0.5rem;
+}
+
+.process-kicker {
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--blue-bright);
+  margin-bottom: 1rem;
+}
+
+.process-step p {
+  max-width: 58ch;
+}
+
+/* ---------- Prose blocks (about page) ---------- */
+.prose h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  margin: clamp(2.5rem, 6vw, 4rem) 0 1.25rem;
+}
+
+.prose h2:first-child {
+  margin-top: 0;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  max-width: 62ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.prose strong {
+  font-weight: 500;
+  color: var(--indigo-deep);
+}

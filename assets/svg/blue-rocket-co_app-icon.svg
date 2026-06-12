@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <title>Blue Rocket Co. - App Icon</title>
+  <desc>App icon. Deep indigo rounded square background with white mark centered. iOS/Android/macOS application icon format at 1024x1024.</desc>
+
+  <!-- Rounded square background -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="#0B2545"/>
+
+  <!-- Centered mark, scaled to fit nicely with breathing room -->
+  <g transform="translate(312, 232) scale(2)">
+    <rect x="20" y="20" width="160" height="240" rx="80" ry="80" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M 65 95 Q 65 50, 100 50 Q 135 50, 135 95 L 135 195 L 65 195 Z" fill="#FFFFFF"/>
+    <circle cx="100" cy="95" r="14" fill="#1B98D4"/>
+    <rect x="73" y="205" width="10" height="28" rx="4" fill="#1B98D4"/>
+    <rect x="93" y="205" width="10" height="40" rx="4" fill="#1B98D4"/>
+    <rect x="113" y="205" width="10" height="28" rx="4" fill="#1B98D4"/>
+  </g>
+</svg>

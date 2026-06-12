@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <title>Blue Rocket Co. - Social Avatar (Circular)</title>
+  <desc>Social media profile avatar. Circular crop-safe at 800x800. For LinkedIn, Twitter, Instagram, etc.</desc>
+
+  <!-- Circular indigo background -->
+  <circle cx="400" cy="400" r="400" fill="#0B2545"/>
+
+  <!-- Centered white mark -->
+  <g transform="translate(250, 215) scale(1.5)">
+    <rect x="20" y="20" width="160" height="240" rx="80" ry="80" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M 65 95 Q 65 50, 100 50 Q 135 50, 135 95 L 135 195 L 65 195 Z" fill="#FFFFFF"/>
+    <circle cx="100" cy="95" r="14" fill="#1B98D4"/>
+    <rect x="73" y="205" width="10" height="28" rx="4" fill="#1B98D4"/>
+    <rect x="93" y="205" width="10" height="40" rx="4" fill="#1B98D4"/>
+    <rect x="113" y="205" width="10" height="28" rx="4" fill="#1B98D4"/>
+  </g>
+</svg>

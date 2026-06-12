@@ -1,0 +1,113 @@
+/* modal.css — discovery call modal */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal.is-open {
+  visibility: visible;
+  pointer-events: all;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 37, 69, 0.75);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.modal.is-open .modal-backdrop {
+  opacity: 1;
+}
+
+.modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  background: var(--cream);
+  border-radius: 8px;
+  padding: clamp(1.75rem, 5vw, 3rem);
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.modal.is-open .modal-dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--indigo-deep);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.modal-close:hover {
+  background: var(--cream-dark);
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  margin-bottom: 0.5rem;
+}
+
+.modal-subhead {
+  font-size: 0.97rem;
+  opacity: 0.75;
+  margin-bottom: 1.75rem;
+}
+
+.modal-contacts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cream-dark);
+}
+
+.modal-contact-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--blue-bright);
+  margin-bottom: 0.25rem;
+}
+
+.modal-contact a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  word-break: break-all;
+  transition: color 0.25s ease;
+}
+
+.modal-contact a:hover {
+  color: var(--blue-bright);
+}

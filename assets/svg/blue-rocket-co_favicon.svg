@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Blue Rocket Co. - Favicon</title>
+  <desc>Simplified favicon. Optimized for very small display sizes (16x16, 32x32). Solid rocket capsule without thrust marks for clarity.</desc>
+
+  <!-- Solid rounded square background for contrast at small sizes -->
+  <rect x="0" y="0" width="64" height="64" rx="12" ry="12" fill="#0B2545"/>
+
+  <!-- Simplified rocket capsule (no badge outline, no thrust at this size) -->
+  <path d="M 22 30 Q 22 18, 32 18 Q 42 18, 42 30 L 42 48 L 22 48 Z" fill="#FFFFFF"/>
+
+  <!-- Window -->
+  <circle cx="32" cy="30" r="4" fill="#1B98D4"/>
+</svg>
