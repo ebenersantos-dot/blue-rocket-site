@@ -72,7 +72,20 @@ One IIFE, no globals, no dependencies. Features in file order:
 
 All animation respects `prefers-reduced-motion: reduce` — reveals render visible immediately and transitions are disabled.
 
-**Note:** the forms are front-end only. There is no backend; submissions show a success message but are not sent anywhere. To make them live, point them at a form service (e.g. Formspree, Basin) or your own endpoint in the `submit` handler.
+### Form delivery
+
+Submissions are delivered by email via **FormSubmit** (formsubmit.co) — a form-to-email relay that requires no server and no account. The endpoint is defined once at the top of the form section in `main.js`:
+
+```js
+var FORM_ENDPOINT = 'https://formsubmit.co/ajax/bluerocketco.7@gmail.com';
+```
+
+On submit, validated fields are POSTed as JSON to that endpoint; FormSubmit forwards them to the inbox formatted as a table, with the subject "New inquiry — Blue Rocket Co. website". While sending, the button shows "Sending…" and is disabled. On success the `.form-success` message shows and the form resets (the modal also closes); on network or service failure the `.form-failure` message shows with a fallback email address.
+
+Two operational notes:
+
+1. **One-time activation:** the very first submission triggers an activation email from FormSubmit to `bluerocketco.7@gmail.com`. Click the confirmation link in it once; all subsequent submissions are delivered normally.
+2. **Changing the destination:** edit `FORM_ENDPOINT` in `main.js`. To switch providers entirely (e.g. Formspree, Basin, or your own API), the same handler works — only the URL and payload shape may need adjusting.
 
 ## 4. Brand & content rules
 

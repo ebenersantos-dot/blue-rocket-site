@@ -268,7 +268,8 @@
   min-height: 1.1em;
 }
 
-.form-success {
+.form-success,
+.form-failure {
   margin-top: 1rem;
   padding: 0.85rem 1rem;
   background: rgba(27, 152, 212, 0.1);
@@ -276,6 +277,11 @@
   border-radius: 0 4px 4px 0;
   font-size: 0.92rem;
   color: var(--indigo-deep);
+}
+
+.form-failure {
+  background: rgba(192, 57, 43, 0.08);
+  border-left-color: var(--error);
 }
 
 /* ---------- Contact info cards ---------- */

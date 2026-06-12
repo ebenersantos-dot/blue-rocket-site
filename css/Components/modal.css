@@ -33,9 +33,10 @@
 .modal-dialog {
   position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: 600px;
   max-height: calc(100vh - 2.5rem);
   overflow-y: auto;
+  scrollbar-width: none; /* still scrollable on short screens, just no visible bar */
   background: var(--cream);
   border-radius: 8px;
   padding: clamp(1.75rem, 5vw, 3rem);
@@ -81,9 +82,14 @@
   margin-bottom: 1.75rem;
 }
 
+.modal-dialog::-webkit-scrollbar {
+  display: none;
+}
+
 .modal-contacts {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-between;
   gap: 1rem;
   margin-top: 1.75rem;
   padding-top: 1.5rem;
@@ -104,7 +110,7 @@
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--indigo-deep);
-  word-break: break-all;
+  white-space: nowrap;
   transition: color 0.25s ease;
 }
 

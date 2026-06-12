@@ -161,7 +161,12 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  /* ---------- Form validation (real-time) ---------- */
+  /* ---------- Form validation (real-time) + email delivery ---------- */
+
+  // FormSubmit forwards submissions to the inbox below — no server needed.
+  // First-ever submission triggers a one-time activation email to this address.
+  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/bluerocketco.7@gmail.com';
+
   function validateField(field) {
     var wrap = field.closest('.form-field');
     var error = wrap ? wrap.querySelector('.form-error') : null;
@@ -203,13 +208,55 @@
         if (firstInvalid) firstInvalid.focus();
         return;
       }
+
+      var submitBtn = form.querySelector('[type="submit"]');
       var success = form.querySelector('.form-success');
-      if (success) success.hidden = false;
-      form.reset();
-      setTimeout(function () {
-        if (success) success.hidden = true;
-        if (modal && modal.classList.contains('is-open') && modal.contains(form)) closeModal();
-      }, 2500);
+      var failure = form.querySelector('.form-failure');
+      var originalLabel = submitBtn ? submitBtn.textContent : '';
+
+      if (failure) failure.hidden = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      var payload = {
+        _subject: 'New inquiry — Blue Rocket Co. website',
+        _template: 'table'
+      };
+      fields.forEach(function (field) {
+        if (field.name) payload[field.name] = field.value.trim();
+      });
+
+      fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Request failed: ' + res.status);
+          return res.json();
+        })
+        .then(function () {
+          if (success) success.hidden = false;
+          form.reset();
+          setTimeout(function () {
+            if (success) success.hidden = true;
+            if (modal && modal.classList.contains('is-open') && modal.contains(form)) closeModal();
+          }, 2500);
+        })
+        .catch(function () {
+          if (failure) failure.hidden = false;
+        })
+        .finally(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          }
+        });
     });
   });
 
