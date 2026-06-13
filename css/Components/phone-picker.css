@@ -2,7 +2,7 @@
 
 .phone-picker {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 0;
   position: relative;
   flex-wrap: wrap;
@@ -25,7 +25,6 @@
   color: var(--indigo-deep);
   transition: border-color 0.25s ease, background-color 0.2s ease;
   min-width: 96px;
-  height: 100%;
 }
 
 .phone-picker-trigger:hover,
