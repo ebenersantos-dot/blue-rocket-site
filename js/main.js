@@ -283,39 +283,6 @@
     });
   });
 
-  /* ---------- Rocket launch animation on scroll ---------- */
-  var rocketEl = document.querySelector('[data-rocket]');
-  var heroSection = document.querySelector('[data-hero]');
-
-  if (rocketEl && heroSection && !prefersReducedMotion) {
-    var launched = false;
-
-    function animateRocket() {
-      var scrollY = window.scrollY;
-      var heroH   = heroSection.offsetHeight;
-      // progress: 0 (top of page) → 1 (hero fully scrolled past)
-      var progress = Math.min(Math.max(scrollY / heroH, 0), 1);
-
-      if (progress > 0.08 && !launched) {
-        launched = true;
-        rocketEl.classList.add('is-launching');
-      } else if (progress <= 0.08 && launched) {
-        launched = false;
-        rocketEl.classList.remove('is-launching');
-      }
-
-      // Smooth parallax-style lift while scrolling through hero
-      var lift = progress * -180;
-      var fade = 1 - Math.min(progress * 2.5, 1);
-      rocketEl.style.transform = 'translateY(' + lift + 'px)';
-      rocketEl.style.opacity   = String(fade);
-
-      requestAnimationFrame(animateRocket);
-    }
-
-    requestAnimationFrame(animateRocket);
-  }
-
   /* ---------- Cursor follow (desktop, fine pointers only) ---------- */
   var cursorDot = document.querySelector('.cursor-dot');
 
