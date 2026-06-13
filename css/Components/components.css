@@ -79,12 +79,27 @@
 }
 
 /* Tier cards */
-.card-tier .tier-price {
-  font-size: 1.6rem;
+.tier-fit {
+  font-size: 0.92rem;
   font-weight: 500;
+  color: var(--indigo-mid);
+  margin-bottom: 0.25rem;
+}
+
+.tier-cta {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--blue-bright);
+  text-decoration: none;
+  transition: color 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.tier-cta:hover {
   color: var(--indigo-deep);
-  letter-spacing: -0.01em;
-  margin-bottom: 1rem;
+  letter-spacing: 0.01em;
 }
 
 .card-link-hint {
