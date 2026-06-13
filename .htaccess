@@ -40,7 +40,7 @@
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 </IfModule>
 
-# ── HTTPS redirect ───────────────────────────────────────────────────
+# ── HTTPS + clean URLs ───────────────────────────────────────────────
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
@@ -49,9 +49,23 @@
     RewriteCond %{HTTP_X_FORWARDED_PROTO} !https
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-    # Remove www (optional — comment out if you prefer www)
+    # Remove www
     RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
     RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+    # Redirect old .html URLs to clean slugs (301 permanent)
+    RewriteRule ^index\.html$   /home   [R=301,L]
+    RewriteRule ^services\.html$ /services [R=301,L]
+    RewriteRule ^about\.html$   /about  [R=301,L]
+    RewriteRule ^process\.html$ /process [R=301,L]
+    RewriteRule ^contact\.html$ /contact [R=301,L]
+
+    # Serve clean slugs → actual HTML files (internal rewrite, no redirect)
+    RewriteRule ^home$     index.html    [L]
+    RewriteRule ^services$ services.html [L]
+    RewriteRule ^about$    about.html    [L]
+    RewriteRule ^process$  process.html  [L]
+    RewriteRule ^contact$  contact.html  [L]
 </IfModule>
 
 # ── Compression ──────────────────────────────────────────────────────

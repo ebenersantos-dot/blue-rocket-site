@@ -324,7 +324,7 @@
   if (transition && !prefersReducedMotion) {
     document.querySelectorAll('a[href]').forEach(function (link) {
       var href = link.getAttribute('href');
-      var isInternal = href && /\.html$/.test(href) && href.indexOf('http') !== 0;
+      var isInternal = href && href.indexOf('http') !== 0 && href.indexOf('mailto:') !== 0 && href.indexOf('tel:') !== 0 && href.charAt(0) !== '#';
       if (!isInternal) return;
 
       link.addEventListener('click', function (e) {
