@@ -249,6 +249,7 @@
       /* ── Trigger button ── */
       React.createElement('button', {
         type: 'button',
+        id: 'phone-trigger',
         className: 'phone-picker-trigger' + (open ? ' is-open' : ''),
         onClick: () => setOpen(o => !o),
         'aria-haspopup': 'listbox',
@@ -299,6 +300,8 @@
       /* ── Number input ── */
       React.createElement('input', {
         type: 'tel',
+        id: 'phone-number',
+        name: 'phone-number',
         className: 'phone-number-input' + (hasError ? ' has-error' : ''),
         placeholder: 'Phone number',
         value: number,
