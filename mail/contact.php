@@ -21,8 +21,8 @@ define('ALLOWED_ORIGIN',   'https://bluerocketcompany.com');
 define('TO_EMAIL',         'bluerocketco.7@gmail.com');
 define('FROM_EMAIL',       'noreply@bluerocketcompany.com');
 define('FROM_NAME',        'Blue Rocket Co. Website');
-define('CSRF_SECRET',      'BR_CSRF_SECRET_CHANGE_THIS_BEFORE_DEPLOY'); // ← change before upload
-define('RATE_LIMIT_DIR',   sys_get_temp_dir() . '/br_ratelimit/');
+define('CSRF_SECRET',      '9b418d42ec6e72911f4d2d7eb4262916af162324d6d9e8a1bf52d36fd5494879');
+define('RATE_LIMIT_DIR',   dirname(__DIR__) . '/br_ratelimit/');
 define('RATE_LIMIT_MAX',   5);    // requests
 define('RATE_LIMIT_WINDOW', 900); // seconds (15 min)
 
@@ -62,6 +62,16 @@ if (
 
 /* ─── CORS ────────────────────────────────────────────────────────── */
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+/* Some shared hosting proxies strip Origin — fall back to Referer */
+if ($origin === '' && !empty($_SERVER['HTTP_REFERER'])) {
+    $parts = parse_url($_SERVER['HTTP_REFERER']);
+    if ($parts !== false && isset($parts['scheme'], $parts['host'])) {
+        $origin = $parts['scheme'] . '://' . $parts['host'];
+        if (isset($parts['port'])) $origin .= ':' . $parts['port'];
+    }
+}
+
 header('Vary: Origin');
 
 if ($origin === ALLOWED_ORIGIN) {
@@ -117,7 +127,7 @@ $ipHash   = hash('sha256', $ip); // never store raw IPs
 $rateFile = RATE_LIMIT_DIR . $ipHash;
 
 if (!is_dir(RATE_LIMIT_DIR)) {
-    @mkdir(RATE_LIMIT_DIR, 0700, true);
+    mkdir(RATE_LIMIT_DIR, 0700, true);
 }
 
 $fp = @fopen($rateFile, 'c+');
@@ -210,7 +220,7 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $headers .= "Content-Transfer-Encoding: 8bit\r\n";
 
-$sent = mail(TO_EMAIL, $subject, $textBody, $headers);
+$sent = mail(TO_EMAIL, $subject, $textBody, $headers, '-f' . FROM_EMAIL);
 
 if (!$sent) {
     json_out(500, ['error' => 'Failed to send email. Please contact us directly at ' . TO_EMAIL]);

@@ -175,7 +175,7 @@
 
   (function generateCsrf() {
     var today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
-    var secret = 'BR_CSRF_SECRET_CHANGE_THIS_BEFORE_DEPLOY'; // must match PHP
+    var secret = '9b418d42ec6e72911f4d2d7eb4262916af162324d6d9e8a1bf52d36fd5494879'; // must match PHP
     var enc = new TextEncoder();
     crypto.subtle.importKey(
       'raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
@@ -245,7 +245,9 @@
 
       var payload = {};
       fields.forEach(function (field) {
-        if (field.name) payload[field.name] = field.value.trim();
+        /* Skip the React phone-number input — the hidden `phone` field carries the full value */
+        if (!field.name || field.name.indexOf('phone-number') === 0) return;
+        payload[field.name] = field.value.trim();
       });
       // Honeypot — bots may fill this; PHP discards submissions where it's set
       payload._hp = '';

@@ -27,7 +27,7 @@
     # - img: self + data URIs (country flags are inline SVG data URIs)
     Header always set Content-Security-Policy "\
         default-src 'self'; \
-        script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; \
+        script-src 'self' https://cdn.jsdelivr.net; \
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; \
         font-src 'self' https://fonts.gstatic.com; \
         connect-src 'self' https://bluerocketcompany.com; \

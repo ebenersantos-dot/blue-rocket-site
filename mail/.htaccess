@@ -1,10 +1,11 @@
 # Deny direct browser access to this directory.
-# contact.php handles its own CORS/origin checks, so it can still
-# be called by fetch() from the frontend — this just prevents
-# directory listing and direct HTML access.
+# contact.php handles its own CORS/origin checks so it remains callable
+# via fetch() from the frontend — this just blocks directory listing
+# and direct non-PHP access.
 
 Options -Indexes
-<Files "*.php">
-    # PHP files in this folder are intentionally callable via AJAX.
-    # Block everything except POST requests from the browser's CORS check.
-</Files>
+
+# Block everything except contact.php
+<FilesMatch "^(?!contact\.php$)">
+    Require all denied
+</FilesMatch>

@@ -190,7 +190,7 @@
   const DEFAULT = COUNTRIES.find(c => c.code === 'ES');
 
   /* ─── PhonePicker component ──────────────────────────────────────── */
-  function PhonePicker({ onChange }) {
+  function PhonePicker({ onChange, idSuffix = '' }) {
     const [selected, setSelected]   = useState(DEFAULT);
     const [number, setNumber]       = useState('');
     const [open, setOpen]           = useState(false);
@@ -249,7 +249,7 @@
       /* ── Trigger button ── */
       React.createElement('button', {
         type: 'button',
-        id: 'phone-trigger',
+        id: 'phone-trigger' + idSuffix,
         className: 'phone-picker-trigger' + (open ? ' is-open' : ''),
         onClick: () => setOpen(o => !o),
         'aria-haspopup': 'listbox',
@@ -300,8 +300,8 @@
       /* ── Number input ── */
       React.createElement('input', {
         type: 'tel',
-        id: 'phone-number',
-        name: 'phone-number',
+        id: 'phone-number' + idSuffix,
+        name: 'phone-number' + idSuffix,
         className: 'phone-number-input' + (hasError ? ' has-error' : ''),
         placeholder: 'Phone number',
         value: number,
@@ -318,9 +318,12 @@
   }
 
   /* ─── Mount on every [data-react="phone-picker"] element ─────────── */
-  document.querySelectorAll('[data-react="phone-picker"]').forEach(function (el) {
+  document.querySelectorAll('[data-react="phone-picker"]').forEach(function (el, instanceIndex) {
     const formField = el.closest('.form-field');
     const inputName = el.dataset.name || 'phone';
+
+    /* Unique suffix so multiple pickers on the same page don't share IDs */
+    const idSuffix = instanceIndex === 0 ? '' : '-' + instanceIndex;
 
     /* Hidden input that the main form validation reads */
     let hiddenInput = formField
@@ -335,12 +338,18 @@
       formField.appendChild(hiddenInput);
     }
 
+    /* Update label for= to match the instance-specific trigger ID */
+    if (formField) {
+      const lbl = formField.querySelector('label[for="phone-trigger"]');
+      if (lbl) lbl.setAttribute('for', 'phone-trigger' + idSuffix);
+    }
+
     function handleChange(val) {
       if (hiddenInput) hiddenInput.value = val.full;
     }
 
     ReactDOM.createRoot(el).render(
-      React.createElement(PhonePicker, { onChange: handleChange })
+      React.createElement(PhonePicker, { onChange: handleChange, idSuffix: idSuffix })
     );
   });
 
