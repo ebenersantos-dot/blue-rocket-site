@@ -237,7 +237,7 @@
   color: var(--indigo-deep);
 }
 
-.form-field input,
+.form-field input:not(.phone-picker-trigger):not(.phone-number-input):not(.phone-search):not([type="hidden"]),
 .form-field textarea {
   width: 100%;
   padding: 0.85rem 1rem;
@@ -248,14 +248,14 @@
   resize: vertical;
 }
 
-.form-field input:focus,
+.form-field input:not(.phone-picker-trigger):not(.phone-number-input):not(.phone-search):not([type="hidden"]):focus,
 .form-field textarea:focus {
   outline: none;
   border-color: var(--blue-bright);
   box-shadow: 0 0 0 3px rgba(27, 152, 212, 0.15);
 }
 
-.form-field.has-error input,
+.form-field.has-error input:not(.phone-picker-trigger):not(.phone-number-input):not(.phone-search):not([type="hidden"]),
 .form-field.has-error textarea {
   border-color: var(--error);
 }
