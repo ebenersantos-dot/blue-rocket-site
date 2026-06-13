@@ -3,9 +3,9 @@
 .phone-picker {
   display: flex;
   align-items: stretch;
+  flex-wrap: nowrap;
   gap: 0;
   position: relative;
-  flex-wrap: wrap;
 }
 
 /* Trigger button (flag + dial code) */
