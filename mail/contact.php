@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 /* ─── Site configuration ──────────────────────────────────────────── */
 define('ALLOWED_ORIGIN',   'https://bluerocketcompany.com');
-define('TO_EMAIL',         'bluerocketco.7@gmail.com');
-define('FROM_EMAIL',       'noreply@bluerocketcompany.com');
+define('TO_EMAIL',         'contact@bluerocketcompany.com');
+define('FROM_EMAIL',       'contact@bluerocketcompany.com');
 define('FROM_NAME',        'Blue Rocket Co. Website');
 define('CSRF_SECRET',      '9b418d42ec6e72911f4d2d7eb4262916af162324d6d9e8a1bf52d36fd5494879');
 define('RATE_LIMIT_DIR',   dirname(__DIR__) . '/br_ratelimit/');
