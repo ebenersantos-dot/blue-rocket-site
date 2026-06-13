@@ -20,18 +20,18 @@
 
     # Content Security Policy
     # - default: only self
-    # - scripts: self + React CDN (cdn.jsdelivr.net)
-    # - styles: self + Google Fonts
+    # - scripts: self + React CDN; unsafe-eval needed by React UMD bundle
+    # - styles: self + inline (needed by React) + Google Fonts
     # - fonts: self + Google Fonts
-    # - connect: self + FormSubmit fallback + bluerocketcompany.com
-    # - img: self + data URIs (country flags are inline SVG data URIs)
+    # - connect: self (AJAX to /mail/contact.php)
+    # - img: self + data URIs (emoji flags rendered via canvas/data in some browsers)
     Header always set Content-Security-Policy "\
         default-src 'self'; \
-        script-src 'self' https://cdn.jsdelivr.net; \
+        script-src 'self' https://cdn.jsdelivr.net 'unsafe-eval'; \
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; \
         font-src 'self' https://fonts.gstatic.com; \
-        connect-src 'self' https://bluerocketcompany.com; \
-        img-src 'self' data:; \
+        connect-src 'self'; \
+        img-src 'self' data: blob:; \
         frame-ancestors 'none'; \
         base-uri 'self'; \
         form-action 'self';"
@@ -67,9 +67,9 @@
     # HTML — short cache, re-validate on every visit
     ExpiresByType text/html                 "access plus 1 hour"
 
-    # CSS and JS — fingerprint in filenames for longer cache
-    ExpiresByType text/css                  "access plus 1 year"
-    ExpiresByType application/javascript    "access plus 1 year"
+    # CSS and JS — short cache; no build-step fingerprinting on this project
+    ExpiresByType text/css                  "access plus 1 day"
+    ExpiresByType application/javascript    "access plus 1 day"
 
     # Assets
     ExpiresByType image/svg+xml             "access plus 1 month"
