@@ -163,9 +163,32 @@
 
   /* ---------- Form validation (real-time) + email delivery ---------- */
 
-  // FormSubmit forwards submissions to the inbox below — no server needed.
-  // First-ever submission triggers a one-time activation email to this address.
-  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/bluerocketco.7@gmail.com';
+  // PHP backend on the same origin. On shared hosting this file lives at
+  // /mail/contact.php relative to the document root.
+  var FORM_ENDPOINT = '/mail/contact.php';
+
+  // Stateless CSRF token: HMAC-SHA256(secret, "contact:YYYY-MM-DD")
+  // The backend recomputes the same token and compares. No session required.
+  // We derive a client-side approximation using SubtleCrypto so the token
+  // is never hardcoded in JS — it's computed fresh each page load.
+  var csrfToken = '';
+
+  (function generateCsrf() {
+    var today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+    var secret = 'BR_CSRF_SECRET_CHANGE_THIS_BEFORE_DEPLOY'; // must match PHP
+    var enc = new TextEncoder();
+    crypto.subtle.importKey(
+      'raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+    ).then(function (key) {
+      return crypto.subtle.sign('HMAC', key, enc.encode('contact:' + today));
+    }).then(function (sig) {
+      csrfToken = Array.from(new Uint8Array(sig))
+        .map(function (b) { return b.toString(16).padStart(2, '0'); })
+        .join('');
+    }).catch(function () {
+      csrfToken = ''; // graceful fallback — PHP will reject, user sees error
+    });
+  })();
 
   function validateField(field) {
     var wrap = field.closest('.form-field');
@@ -220,19 +243,19 @@
         submitBtn.textContent = 'Sending…';
       }
 
-      var payload = {
-        _subject: 'New inquiry — Blue Rocket Co. website',
-        _template: 'table'
-      };
+      var payload = {};
       fields.forEach(function (field) {
         if (field.name) payload[field.name] = field.value.trim();
       });
+      // Honeypot — bots may fill this; PHP discards submissions where it's set
+      payload._hp = '';
 
       fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'X-CSRF-Token': csrfToken
         },
         body: JSON.stringify(payload)
       })
@@ -259,6 +282,39 @@
         });
     });
   });
+
+  /* ---------- Rocket launch animation on scroll ---------- */
+  var rocketEl = document.querySelector('[data-rocket]');
+  var heroSection = document.querySelector('[data-hero]');
+
+  if (rocketEl && heroSection && !prefersReducedMotion) {
+    var launched = false;
+
+    function animateRocket() {
+      var scrollY = window.scrollY;
+      var heroH   = heroSection.offsetHeight;
+      // progress: 0 (top of page) → 1 (hero fully scrolled past)
+      var progress = Math.min(Math.max(scrollY / heroH, 0), 1);
+
+      if (progress > 0.08 && !launched) {
+        launched = true;
+        rocketEl.classList.add('is-launching');
+      } else if (progress <= 0.08 && launched) {
+        launched = false;
+        rocketEl.classList.remove('is-launching');
+      }
+
+      // Smooth parallax-style lift while scrolling through hero
+      var lift = progress * -180;
+      var fade = 1 - Math.min(progress * 2.5, 1);
+      rocketEl.style.transform = 'translateY(' + lift + 'px)';
+      rocketEl.style.opacity   = String(fade);
+
+      requestAnimationFrame(animateRocket);
+    }
+
+    requestAnimationFrame(animateRocket);
+  }
 
   /* ---------- Cursor follow (desktop, fine pointers only) ---------- */
   var cursorDot = document.querySelector('.cursor-dot');

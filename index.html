@@ -41,6 +41,31 @@
     <!-- ===== Hero ===== -->
     <section class="hero" data-hero>
       <div class="hero-stripe" aria-hidden="true"></div>
+
+      <!-- Rocket SVG — animated on scroll by main.js -->
+      <svg class="hero-rocket" data-rocket aria-hidden="true" viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body -->
+        <path d="M40 8 C28 8 18 28 16 56 L16 108 Q16 116 24 116 L56 116 Q64 116 64 108 L64 56 C62 28 52 8 40 8 Z" fill="#F1EFE8" opacity="0.92"/>
+        <!-- Nose cone -->
+        <path d="M40 4 C36 4 22 20 18 44 L62 44 C58 20 44 4 40 4 Z" fill="white"/>
+        <!-- Window -->
+        <circle cx="40" cy="64" r="10" fill="#1B98D4" opacity="0.9"/>
+        <circle cx="40" cy="64" r="6"  fill="#85B7EB" opacity="0.6"/>
+        <!-- Left fin -->
+        <path d="M16 96 L4 116 L16 112 Z" fill="#85B7EB" opacity="0.75"/>
+        <!-- Right fin -->
+        <path d="M64 96 L76 116 L64 112 Z" fill="#85B7EB" opacity="0.75"/>
+        <!-- Exhaust outer -->
+        <ellipse cx="40" cy="120" rx="12" ry="5" fill="#1B4480" opacity="0.6"/>
+        <!-- Flame group (animates when launching) -->
+        <g class="rocket-flame">
+          <ellipse cx="40" cy="128" rx="7" ry="10" fill="#1B98D4" opacity="0.85"/>
+          <ellipse cx="40" cy="133" rx="4" ry="8"  fill="#F1EFE8" opacity="0.7"/>
+          <ellipse cx="37" cy="138" rx="3" ry="6"  fill="#85B7EB" opacity="0.5"/>
+          <ellipse cx="43" cy="136" rx="2.5" ry="5" fill="#85B7EB" opacity="0.45"/>
+        </g>
+      </svg>
+
       <div class="hero-content">
         <img class="hero-logo reveal-hero" src="assets/svg/blue-rocket-co_lockup_stacked_white.svg" alt="Blue Rocket Co.">
         <h1 class="hero-tagline reveal-hero">Operations systems<br>for service businesses</h1>
@@ -291,6 +316,11 @@
           <input type="text" id="m-company" name="company" required minlength="2" autocomplete="organization">
           <span class="form-error"></span>
         </div>
+                <div class="form-field">
+          <label>Phone number <span style="font-weight:400;opacity:.6;">(optional)</span></label>
+          <div data-react="phone-picker" data-name="phone"></div>
+          <input type="hidden" name="phone" value="">
+        </div>
         <div class="form-field">
           <label for="m-challenge">What's your biggest operational challenge right now?</label>
           <textarea id="m-challenge" name="challenge" rows="4" required minlength="10"></textarea>
@@ -317,6 +347,9 @@
     </div>
   </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="js/phone-picker.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

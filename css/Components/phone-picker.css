@@ -1,0 +1,199 @@
+/* phone-picker.css — React country-code picker component */
+
+.phone-picker {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+/* Trigger button (flag + dial code) */
+.phone-picker-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 0.75rem;
+  border: 1.5px solid var(--cream-dark);
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  background: var(--white);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  transition: border-color 0.25s ease, background-color 0.2s ease;
+  min-width: 96px;
+  height: 100%;
+}
+
+.phone-picker-trigger:hover,
+.phone-picker-trigger.is-open {
+  border-color: var(--blue-bright);
+  background: rgba(27, 152, 212, 0.04);
+  z-index: 2;
+}
+
+.phone-flag {
+  font-size: 1.25rem;
+  line-height: 1;
+  display: inline-block;
+}
+
+.phone-dial {
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+
+.phone-chevron {
+  font-size: 0.7rem;
+  opacity: 0.55;
+  transition: transform 0.25s ease;
+  margin-left: 0.15rem;
+}
+
+.phone-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* Number input */
+.phone-number-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 0 4px 4px 0;
+  background: var(--white);
+  font: inherit;
+  color: var(--ink);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.phone-number-input:focus {
+  outline: none;
+  border-color: var(--blue-bright);
+  box-shadow: 0 0 0 3px rgba(27, 152, 212, 0.15);
+}
+
+.phone-number-input.has-error {
+  border-color: var(--error);
+}
+
+/* Open trigger gets a matching focus ring */
+.phone-picker-trigger.is-open + .phone-dropdown + .phone-number-input,
+.phone-picker-trigger.is-open {
+  border-color: var(--blue-bright);
+}
+
+/* Dropdown */
+.phone-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 280px;
+  max-height: 280px;
+  background: var(--white);
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 6px;
+  box-shadow: 0 16px 40px rgba(11, 37, 69, 0.16);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.phone-search-wrap {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--cream-dark);
+  flex-shrink: 0;
+}
+
+.phone-search {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.phone-search:focus {
+  outline: none;
+  border-color: var(--blue-bright);
+}
+
+/* Scrollable list */
+.phone-list {
+  list-style: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cream-dark) transparent;
+  flex: 1;
+}
+
+.phone-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.phone-list::-webkit-scrollbar-thumb {
+  background: var(--cream-dark);
+  border-radius: 4px;
+}
+
+.phone-option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.85rem;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: var(--ink);
+  transition: background-color 0.15s ease;
+}
+
+.phone-option:hover,
+.phone-option.is-selected {
+  background: rgba(27, 152, 212, 0.08);
+}
+
+.phone-option.is-selected .phone-option-name {
+  font-weight: 500;
+  color: var(--indigo-deep);
+}
+
+.phone-option-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phone-option-dial {
+  color: var(--blue-bright);
+  font-size: 0.82rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.phone-list-empty {
+  padding: 1.25rem;
+  text-align: center;
+  font-size: 0.88rem;
+  opacity: 0.6;
+}
+
+.phone-error {
+  width: 100%;
+  flex-basis: 100%;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 420px) {
+  .phone-dropdown {
+    width: calc(100vw - 2 * var(--container-pad));
+  }
+}

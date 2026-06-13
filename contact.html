@@ -87,6 +87,11 @@
               <span class="form-error"></span>
             </div>
             <div class="form-field">
+              <label>Phone number <span style="font-weight:400;opacity:.6;">(optional)</span></label>
+              <div data-react="phone-picker" data-name="phone"></div>
+              <input type="hidden" name="phone" value="">
+            </div>
+            <div class="form-field">
               <label for="c-challenge">What's your biggest operational challenge right now?</label>
               <textarea id="c-challenge" name="challenge" rows="6" required minlength="10"></textarea>
               <span class="form-error"></span>
@@ -149,6 +154,11 @@
           <input type="text" id="m-company" name="company" required minlength="2" autocomplete="organization">
           <span class="form-error"></span>
         </div>
+                <div class="form-field">
+          <label>Phone number <span style="font-weight:400;opacity:.6;">(optional)</span></label>
+          <div data-react="phone-picker" data-name="phone"></div>
+          <input type="hidden" name="phone" value="">
+        </div>
         <div class="form-field">
           <label for="m-challenge">What's your biggest operational challenge right now?</label>
           <textarea id="m-challenge" name="challenge" rows="4" required minlength="10"></textarea>
@@ -175,6 +185,9 @@
     </div>
   </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="js/phone-picker.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
