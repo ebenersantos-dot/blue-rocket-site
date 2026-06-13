@@ -163,9 +163,32 @@
 
   /* ---------- Form validation (real-time) + email delivery ---------- */
 
-  // FormSubmit forwards submissions to the inbox below — no server needed.
-  // First-ever submission triggers a one-time activation email to this address.
-  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/bluerocketco.7@gmail.com';
+  // PHP backend on the same origin. On shared hosting this file lives at
+  // /mail/contact.php relative to the document root.
+  var FORM_ENDPOINT = '/mail/contact.php';
+
+  // Stateless CSRF token: HMAC-SHA256(secret, "contact:YYYY-MM-DD")
+  // The backend recomputes the same token and compares. No session required.
+  // We derive a client-side approximation using SubtleCrypto so the token
+  // is never hardcoded in JS — it's computed fresh each page load.
+  var csrfToken = '';
+
+  (function generateCsrf() {
+    var today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+    var secret = 'BR_CSRF_SECRET_CHANGE_THIS_BEFORE_DEPLOY'; // must match PHP
+    var enc = new TextEncoder();
+    crypto.subtle.importKey(
+      'raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+    ).then(function (key) {
+      return crypto.subtle.sign('HMAC', key, enc.encode('contact:' + today));
+    }).then(function (sig) {
+      csrfToken = Array.from(new Uint8Array(sig))
+        .map(function (b) { return b.toString(16).padStart(2, '0'); })
+        .join('');
+    }).catch(function () {
+      csrfToken = ''; // graceful fallback — PHP will reject, user sees error
+    });
+  })();
 
   function validateField(field) {
     var wrap = field.closest('.form-field');
@@ -220,19 +243,19 @@
         submitBtn.textContent = 'Sending…';
       }
 
-      var payload = {
-        _subject: 'New inquiry — Blue Rocket Co. website',
-        _template: 'table'
-      };
+      var payload = {};
       fields.forEach(function (field) {
         if (field.name) payload[field.name] = field.value.trim();
       });
+      // Honeypot — bots may fill this; PHP discards submissions where it's set
+      payload._hp = '';
 
       fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'X-CSRF-Token': csrfToken
         },
         body: JSON.stringify(payload)
       })
