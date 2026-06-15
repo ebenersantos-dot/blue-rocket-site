@@ -11,9 +11,9 @@
   var STORAGE_KEY = 'br_lang';
 
   var LANGS = {
-    en: { flag: '🇬🇧' },
-    pt: { flag: '🇧🇷' },
-    es: { flag: '🇪🇸' }
+    en: { flag: '🇬🇧', label: 'English' },
+    pt: { flag: '🇧🇷', label: 'Português' },
+    es: { flag: '🇪🇸', label: 'Español' }
   };
 
   var T = {
@@ -260,23 +260,54 @@
   function buildSwitcher() {
     var switcher = document.createElement('div');
     switcher.className = 'lang-switcher';
-    switcher.setAttribute('role', 'group');
-    switcher.setAttribute('aria-label', 'Language');
+
+    /* Globe trigger button */
+    var globeBtn = document.createElement('button');
+    globeBtn.type = 'button';
+    globeBtn.className = 'lang-globe-btn';
+    globeBtn.setAttribute('aria-label', 'Select language');
+    globeBtn.setAttribute('aria-expanded', 'false');
+    globeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+
+    /* Dropdown */
+    var dropdown = document.createElement('div');
+    dropdown.className = 'lang-dropdown';
+    dropdown.setAttribute('role', 'menu');
 
     Object.keys(LANGS).forEach(function (code) {
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'lang-btn';
+      btn.className = 'lang-btn' + (code === currentLang ? ' is-active' : '');
       btn.dataset.lang = code;
-      btn.setAttribute('aria-pressed', String(code === currentLang));
-      btn.innerHTML = '<span class="lang-flag" aria-hidden="true">' + LANGS[code].flag + '</span>';
+      btn.setAttribute('role', 'menuitem');
+      btn.innerHTML = '<span class="lang-flag" aria-hidden="true">' + LANGS[code].flag + '</span>'
+                    + '<span class="lang-label">' + LANGS[code].label + '</span>';
       btn.addEventListener('click', function () {
         currentLang = code;
         localStorage.setItem(STORAGE_KEY, code);
         applyLang(code);
+        closeDropdown();
       });
-      switcher.appendChild(btn);
+      dropdown.appendChild(btn);
     });
+
+    switcher.appendChild(globeBtn);
+    switcher.appendChild(dropdown);
+
+    /* Toggle open/close */
+    globeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = switcher.classList.toggle('is-open');
+      globeBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    /* Close on outside click */
+    document.addEventListener('click', closeDropdown);
+
+    function closeDropdown() {
+      switcher.classList.remove('is-open');
+      globeBtn.setAttribute('aria-expanded', 'false');
+    }
 
     /* Insert before the hamburger button */
     var hamburger = document.querySelector('[data-hamburger]');
