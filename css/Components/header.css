@@ -85,20 +85,14 @@
 .lang-btn {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 8px;
+  padding: 4px 6px;
   border-radius: 4px;
   background: transparent;
   border: 1px solid transparent;
-  color: var(--cream) !important;
   opacity: 0.85;
-  font-size: 0.92rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
   cursor: pointer;
   transition: opacity 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   line-height: 1;
-  white-space: nowrap;
 }
 
 .lang-btn:hover {
@@ -118,24 +112,12 @@
 }
 
 .lang-label {
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--cream) !important;
+  display: none;
 }
 
 @media (max-width: 768px) {
   .lang-switcher {
     margin-right: 0.25rem;
-    gap: 1px;
-  }
-
-  .lang-btn {
-    padding: 4px 6px;
-    gap: 3px;
-  }
-
-  .lang-label {
-    display: none;
   }
 }
 
