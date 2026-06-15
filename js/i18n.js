@@ -11,9 +11,9 @@
   var STORAGE_KEY = 'br_lang';
 
   var LANGS = {
-    en: { flag: '🇬🇧', label: 'EN' },
-    pt: { flag: '🇧🇷', label: 'PT' },
-    es: { flag: '🇪🇸', label: 'ES' }
+    en: { flag: '🇬🇧' },
+    pt: { flag: '🇧🇷' },
+    es: { flag: '🇪🇸' }
   };
 
   var T = {
@@ -269,8 +269,7 @@
       btn.className = 'lang-btn';
       btn.dataset.lang = code;
       btn.setAttribute('aria-pressed', String(code === currentLang));
-      btn.innerHTML = '<span class="lang-flag" aria-hidden="true">' + LANGS[code].flag + '</span>'
-                    + '<span class="lang-label">' + LANGS[code].label + '</span>';
+      btn.innerHTML = '<span class="lang-flag" aria-hidden="true">' + LANGS[code].flag + '</span>';
       btn.addEventListener('click', function () {
         currentLang = code;
         localStorage.setItem(STORAGE_KEY, code);
