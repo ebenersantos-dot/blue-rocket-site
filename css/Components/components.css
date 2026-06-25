@@ -193,7 +193,9 @@
   flex: 0 0 auto;
   width: clamp(260px, 32vw, 380px);
   aspect-ratio: 4 / 5;
-  background: rgba(241, 239, 232, 0.04);
+  background-color: rgba(11, 37, 69, 0.8);
+  background-size: cover;
+  background-position: center;
   border: 1px solid rgba(241, 239, 232, 0.12);
   border-radius: 8px;
   padding: 2rem;
@@ -201,21 +203,52 @@
   flex-direction: column;
   justify-content: space-between;
   user-select: none;
-  transition: transform 0.4s var(--ease-out), background-color 0.4s ease,
-    border-color 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.4s var(--ease-out), border-color 0.4s ease;
+}
+
+/* Dark gradient overlay so text stays readable */
+.gallery-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(7, 13, 26, 0.88) 0%,
+    rgba(7, 13, 26, 0.40) 50%,
+    rgba(7, 13, 26, 0.18) 100%
+  );
+  z-index: 0;
+  transition: opacity 0.4s ease;
 }
 
 .gallery-card:hover {
-  transform: translateY(-8px);
-  background: rgba(241, 239, 232, 0.08);
+  transform: translateY(-8px) translateZ(0);
+  -webkit-transform: translateY(-8px) translateZ(0);
   border-color: var(--blue-bright);
+}
+
+.gallery-card:hover::before {
+  opacity: 0.75;
 }
 
 .gallery-num {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 500;
   letter-spacing: -0.02em;
-  color: rgba(133, 183, 235, 0.35);
+  color: rgba(133, 183, 235, 0.55);
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-card figcaption {
+  position: relative;
+  z-index: 1;
 }
 
 .gallery-card figcaption strong {
