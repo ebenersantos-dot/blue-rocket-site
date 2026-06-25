@@ -8,9 +8,92 @@
   justify-content: center;
   text-align: center;
   position: relative;
-  background: linear-gradient(160deg, var(--indigo-deep) 0%, var(--indigo-mid) 100%);
+  background: #070d1a;
   overflow: hidden;
   padding: calc(var(--header-height) + 2rem) var(--container-pad) 6rem;
+}
+
+/* ── Animated neon glow orbs ── */
+
+/* Primary orb — bright blue, upper-center, slow breathe + drift */
+.hero::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  width: 75vw;
+  height: 75vw;
+  max-width: 960px;
+  max-height: 960px;
+  background: radial-gradient(circle,
+    rgba(27, 152, 212, 0.32) 0%,
+    rgba(27, 152, 212, 0.10) 42%,
+    transparent 70%
+  );
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(48px);
+  animation: orb-primary 11s ease-in-out infinite alternate;
+}
+
+/* Secondary orb — light blue/indigo, lower-right */
+.hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  width: 55vw;
+  height: 55vw;
+  max-width: 720px;
+  max-height: 720px;
+  background: radial-gradient(circle,
+    rgba(133, 183, 235, 0.18) 0%,
+    rgba(27, 68, 128, 0.18) 50%,
+    transparent 70%
+  );
+  bottom: -22%;
+  right: -8%;
+  filter: blur(64px);
+  animation: orb-secondary 15s ease-in-out infinite alternate;
+}
+
+/* Third orb — deep indigo accent, lower-left */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  width: 42vw;
+  height: 42vw;
+  max-width: 520px;
+  max-height: 520px;
+  background: radial-gradient(circle,
+    rgba(27, 68, 128, 0.30) 0%,
+    rgba(11, 37, 69, 0.15) 55%,
+    transparent 70%
+  );
+  bottom: 8%;
+  left: -8%;
+  filter: blur(56px);
+  animation: orb-tertiary 19s ease-in-out infinite alternate;
+}
+
+@keyframes orb-primary {
+  0%   { transform: translateX(-50%) translateY(0)    scale(1);    opacity: 1;   }
+  40%  { transform: translateX(-46%) translateY(6%)   scale(1.12); opacity: 0.82; }
+  100% { transform: translateX(-54%) translateY(-4%)  scale(0.94); opacity: 0.95; }
+}
+
+@keyframes orb-secondary {
+  0%   { transform: translate(0,    0)    scale(1.0); opacity: 0.80; }
+  45%  { transform: translate(-6%,  -9%)  scale(1.18); opacity: 1.00; }
+  100% { transform: translate(-11%, -5%)  scale(0.88); opacity: 0.70; }
+}
+
+@keyframes orb-tertiary {
+  0%   { transform: translate(0,   0)    scale(1.0);  opacity: 0.60; }
+  50%  { transform: translate(7%,  -11%) scale(1.22); opacity: 0.90; }
+  100% { transform: translate(3%,  -6%)  scale(1.06); opacity: 0.70; }
 }
 
 /* Bright-blue left accent stripe */
@@ -21,6 +104,7 @@
   bottom: 0;
   width: 6px;
   background: var(--blue-bright);
+  z-index: 1;
 }
 
 .hero-content {
@@ -28,6 +112,8 @@
   flex-direction: column;
   align-items: center;
   max-width: 760px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-logo {
@@ -62,6 +148,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
+  z-index: 1;
 }
 
 .scroll-indicator-label {
